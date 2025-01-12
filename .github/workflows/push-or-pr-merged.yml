@@ -48,11 +48,26 @@ jobs:
                 AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
                 SOURCE_DIR: build
 
-            - name: Notify Slack
-              uses: 8398a7/action-slack@v3
+            - name: Send payload and coverage to Slack workflow
+              uses: slackapi/slack-github-action@v2.0.0
               with:
-                status: ${{ job.status }}
-                fields: repo,message,commit,author,action,workflow
-                env:
-                SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-                if: always()
+                webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+                webhook-type: webhook-trigger
+                payload: |
+                    status: "${{ job.status }}"
+                    option: "false"
+                attachments: |
+                    [
+                      {
+                        "text": "Coverage Report",
+                        "fields": [
+                          {
+                            "title": "Coverage Artifacts",
+                            "value": "You can view the coverage details below.",
+                            "short": false
+                          }
+                        ],
+                        "file": "${{ steps.upload-coverage.outputs.artifact-url }}"
+                      }
+                    ]
+              
