@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { act } from 'react'; // Import act from react
-import '@testing-library/jest-dom'
+import '@testing-library/jest-dom';
 import App from '../App';
 
 describe('App Component', () => {
