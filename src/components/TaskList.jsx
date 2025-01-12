@@ -1,6 +1,6 @@
 function TaskList({ tasks, onToggleTask, onDeleteTask }) {
     if (tasks.length === 0) {
-      return <p data-testid="no-tasks">No tasks yet</p>;
+      return <p data-testid="no-tasks">No Tasks Yet</p>;
     }
   
     return (
